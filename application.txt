@@ -1,0 +1,5 @@
+stories not compelete in feature 1 authentication
+ => staff sees waste screan
+ => staff sees ingrediant names and her features
+ => verify token was done but what can manger do still on progress
+

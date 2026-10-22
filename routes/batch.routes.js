@@ -2,12 +2,16 @@ const express = require('express');
 const router = express.Router();
 const { 
     createBatch, 
-    getIngredientBatchesAndStock 
+    getIngredientBatchesAndStock,
+    updateBatch,
+    cancelBatch,
+    markBatchAsReceived
 } = require('../controllers/batch.controller');
 
 router.post('/', createBatch); // Adding a new batch
-
-// Retrieving batches of a specific item, along with the calculation of available inventory.
-router.get('/ingredient/:ingredientId', getIngredientBatchesAndStock); 
+router.get('/ingredient/:ingredientId', getIngredientBatchesAndStock); // Retrieving batches and stock
+router.put('/:id', updateBatch); // Update an upcoming batch
+router.patch('/:id/cancel', cancelBatch); // Cancel an upcoming batch
+router.patch('/:id/receive', markBatchAsReceived); // Mark an upcoming batch as received
 
 module.exports = router;

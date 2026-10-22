@@ -21,7 +21,7 @@ const signUp = asyncHandler(async (req, res) => {
     const password = await bcrypt.hash(req.body.password, +process.env.USER_PASS_SALT)
 
     const otp = crypto.randomInt(100000, 1000000).toString()
-    console.log(" OTP Code is: ", otp);
+    // console.log(" OTP Code is: ", otp);
 
     const hashedOtp = await bcrypt.hash(otp, +process.env.OTP_SALT)
     const otpExpires = new Date(Date.now() + 5 * 60 * 1000)
@@ -42,6 +42,7 @@ const signUp = asyncHandler(async (req, res) => {
     try {
         await sendOtp(req.body.email, otp)
     } catch (err) {
+        console.log("Email sending error details: ", err); // سيطبع سبب الفشل بالتحديد في التيرمينال
         return res.status(500).json({
             success: false,
             msg: 'Account created but we could not send the OTP email. Please use re-send OTP.',
@@ -114,6 +115,7 @@ const reSendOTP = asyncHandler(async (req, res) => {
     try {
         await sendOtp(email, otp)
     } catch (err) {
+        console.log("Email resending error details: ", err);
         return res.status(500).json({ success: false, msg: 'Could not send the OTP email, try again.' })
     }
 
